@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import model.images.DitherFilter;
 import model.patterns.CheckerBoard;
 import model.Generator;
 import model.images.FilterImage;
@@ -33,70 +34,80 @@ public class Driver {
   public static void main(String[] args) throws IOException {
     File sourceImage = new File("res/mojo.jpg");
 
-    try {
-      // Sharpen the image
+      // Dithering the image
       BufferedImage img = ImageIO.read(sourceImage);
-      Generator sharpen = new FilterImage(img, Filter.SHARPEN);
-      img = sharpen.generateImage();
-      ImageIO.write(img, "bmp", new File("res/sharpen.bmp"));
+      Generator dither = new DitherFilter(img, Filter.DITHER);
+      img = dither.generateImage();
+      ImageIO.write(img, "jpg", new File("res/dither.jpg"));
 
-      // Blur the image
-      sourceImage = new File("res/mojo-bmp.bmp");
-      img = ImageIO.read(sourceImage);
-      Generator blur = new FilterImage(img, Filter.BLUR);
-      img = blur.generateImage();
-      ImageIO.write(img, "png", new File("res/blur.png"));
+//    System.out.println(Math.round(240/255));
+//    return;
 
-      // Set the image with sepia tone
-      sourceImage = new File("res/mojo-png.png");
-      img = ImageIO.read(sourceImage);
-      Generator sepia = new TransformImage(img, Transform.SEPIA);
-      img = sepia.generateImage();
-      ImageIO.write(img, "png", new File("res/sepia.png"));
-
-      // Set the image with greyscale tone
-      img = ImageIO.read(sourceImage);
-      Generator greyscale = new TransformImage(img, Transform.GREYSCALE);
-      img = greyscale.generateImage();
-      ImageIO.write(img, "png", new File("res/greyscale.png"));
-
-      // Draw a vertical rainbow
-      // Initialize with width/ height/ orientation. Defaults are 700/ 700/ Horizontal respectively
-      Generator rainbowV =
-              Rainbow.getBuilder().imageHeight(560).orientation(Orientation.VERTICAL).build();
-      img = rainbowV.generateImage();
-      ImageIO.write(img, "png", new File("res/rainbowVertical.png"));
-
-      // Draw a horizontal rainbow
-      // Initialize with width/ height/ orientation. Defaults are 700/ 700/ Horizontal respectively
-      Generator rainbowH =
-              Rainbow.getBuilder().imageWidth(560).orientation(Orientation.HORIZONTAL).build();
-      img = rainbowH.generateImage();
-      ImageIO.write(img, "png", new File("res/rainbowHorizontal.bmp"));
-
-      // Generate a checkerboard pattern
-      // Initialize with square size or image width. Defaults are 800 as image width
-      Generator checkerboard = CheckerBoard.getBuilder().squareSize(80).build();
-      img = checkerboard.generateImage();
-      ImageIO.write(img, "png", new File("res/checkerboard.png"));
-
-      // Draw the flag of France
-      Generator france = new France(600);  // must be divisible by 3
-      img = france.generateImage();
-      ImageIO.write(img, "png", new File("res/france.png"));
-
-      // Draw the flag of Greece
-      Generator greece = new Greece(1000);  // divisible by 10
-      img = greece.generateImage();
-      ImageIO.write(img, "png", new File("res/greece.bmp"));
-
-      // Draw the flag of Switzerland
-      Generator swiss = new Switzerland(502);
-      img = swiss.generateImage();
-      ImageIO.write(img, "png", new File("res/swiss.jpg"));
-
-    } catch (IOException e) {
-      throw new IOException("Check the validity of the input file!");
-    }
+//    try {
+//      // Sharpen the image
+//      BufferedImage img = ImageIO.read(sourceImage);
+//      System.out.println(img);
+//      Generator sharpen = new FilterImage(img, Filter.SHARPEN);
+//      img = sharpen.generateImage();
+//      ImageIO.write(img, "bmp", new File("res/sharpen.bmp"));
+//
+//      // Blur the image
+//      sourceImage = new File("res/mojo-bmp.bmp");
+//      img = ImageIO.read(sourceImage);
+//      Generator blur = new FilterImage(img, Filter.BLUR);
+//      img = blur.generateImage();
+//      ImageIO.write(img, "png", new File("res/blur.png"));
+//
+//      // Set the image with sepia tone
+//      sourceImage = new File("res/mojo-png.png");
+//      img = ImageIO.read(sourceImage);
+//      Generator sepia = new TransformImage(img, Transform.SEPIA);
+//      img = sepia.generateImage();
+//      ImageIO.write(img, "png", new File("res/sepia.png"));
+//
+//      // Set the image with greyscale tone
+//      img = ImageIO.read(sourceImage);
+//      Generator greyscale = new TransformImage(img, Transform.GREYSCALE);
+//      img = greyscale.generateImage();
+//      ImageIO.write(img, "png", new File("res/greyscale.png"));
+//
+//      // Draw a vertical rainbow
+//      // Initialize with width/ height/ orientation. Defaults are 700/ 700/ Horizontal respectively
+//      Generator rainbowV =
+//              Rainbow.getBuilder().imageHeight(560).orientation(Orientation.VERTICAL).build();
+//      img = rainbowV.generateImage();
+//      ImageIO.write(img, "png", new File("res/rainbowVertical.png"));
+//
+//      // Draw a horizontal rainbow
+//      // Initialize with width/ height/ orientation. Defaults are 700/ 700/ Horizontal respectively
+//      Generator rainbowH =
+//              Rainbow.getBuilder().imageWidth(560).orientation(Orientation.HORIZONTAL).build();
+//      img = rainbowH.generateImage();
+//      ImageIO.write(img, "png", new File("res/rainbowHorizontal.bmp"));
+//
+//      // Generate a checkerboard pattern
+//      // Initialize with square size or image width. Defaults are 800 as image width
+//      Generator checkerboard = CheckerBoard.getBuilder().squareSize(80).build();
+//      img = checkerboard.generateImage();
+//      ImageIO.write(img, "png", new File("res/checkerboard.png"));
+//
+//      // Draw the flag of France
+//      Generator france = new France(600);  // must be divisible by 3
+//      img = france.generateImage();
+//      ImageIO.write(img, "png", new File("res/france.png"));
+//
+//      // Draw the flag of Greece
+//      Generator greece = new Greece(1000);  // divisible by 10
+//      img = greece.generateImage();
+//      ImageIO.write(img, "png", new File("res/greece.bmp"));
+//
+//      // Draw the flag of Switzerland
+//      Generator swiss = new Switzerland(502);
+//      img = swiss.generateImage();
+//      ImageIO.write(img, "png", new File("res/swiss.jpg"));
+//
+//    } catch (IOException e) {
+//      throw new IOException("Check the validity of the input file!");
+//    }
   }
 }

@@ -10,10 +10,10 @@ import model.AbstractGenerator;
  * image.
  */
 public class FilterImage extends AbstractGenerator {
-  private final int[][][] pixelArray;
-  private final Filter type;
-  private final int imageHeight;
-  private final int imageWidth;
+  final int[][][] pixelArray;
+  final Filter type;
+  final int imageHeight;
+  final int imageWidth;
 
   /**
    * This constructor creates the image pixel array to apply the filter on. The filter is received
@@ -36,7 +36,7 @@ public class FilterImage extends AbstractGenerator {
     }
   }
 
-  private int[][] generateDirectionalMatrix(int size) {
+  int[][] generateDirectionalMatrix(int size) {
     int bound = -size / 2;
     int[][] directions = new int[size * size][2];
 
@@ -52,7 +52,7 @@ public class FilterImage extends AbstractGenerator {
     return directions;
   }
 
-  private boolean inValidBounds(int x, int y, int width, int height) {
+  boolean inValidBounds(int x, int y, int width, int height) {
     return x >= 0 && x < width && y >= 0 && y < height;
   }
 

@@ -1,5 +1,6 @@
 # Fun with Images
 
+
 This projects performs image transformation and filtering along with generation of checkerboard pattern, vertical and Horizontal Rainbows and country flags based on the user specified size.
 
 
