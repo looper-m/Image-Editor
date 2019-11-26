@@ -8,11 +8,21 @@ import controller.GeneratorCommand;
 import model.patterns.Orientation;
 import model.patterns.Rainbow;
 
+/**
+ * This command class represents the controller for this specific class.
+ */
 public class RainbowCommand implements GeneratorCommand {
   private int width = 700;
   private int height = 700;
   private Orientation orientation = Orientation.HORIZONTAL;
 
+  /**
+   * This constructor checks for parameter presence and syntax and then initializes the width,
+   * height and orientation of the pattern. Please note the width and height must be a multiple of 7
+   * (VIBGYOR).
+   *
+   * @param parameters argument containing the width or height or orientation or all of these.
+   */
   public RainbowCommand(String parameters) {
     Set<String> options = new HashSet<>();
     options.add("width");
@@ -22,7 +32,7 @@ public class RainbowCommand implements GeneratorCommand {
     String[] split = parameters.split("\\s+");
     for (String option_i : split) {
       String[] keyValue = option_i.split(":");
-      if(keyValue.length < 2) {
+      if (keyValue.length < 2) {
         throw new IllegalArgumentException("Bad key value pair!");
       }
       if (options.contains(keyValue[0].trim())) {

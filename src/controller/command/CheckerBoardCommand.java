@@ -7,10 +7,19 @@ import java.util.Set;
 import controller.GeneratorCommand;
 import model.patterns.CheckerBoard;
 
+/**
+ * This command class represents the controller for this specific class.
+ */
 public class CheckerBoardCommand implements GeneratorCommand {
   private int width = 800;
   private int squareWidth = 100;
 
+  /**
+   * This constructor checks for parameter presence and syntax and then initializes the width of the
+   * image or individual square width.
+   *
+   * @param parameters argument containing the width of the checkerboard or one square in it.
+   */
   public CheckerBoardCommand(String parameters) {
     Set<String> options = new HashSet<>();
     options.add("width");
@@ -19,7 +28,7 @@ public class CheckerBoardCommand implements GeneratorCommand {
     String[] split = parameters.split("\\s+");
     for (String option_i : split) {
       String[] keyValue = option_i.split(":");
-      if(keyValue.length < 2) {
+      if (keyValue.length < 2) {
         throw new IllegalArgumentException("Bad key value pair!");
       }
       if (options.contains(keyValue[0].trim())) {

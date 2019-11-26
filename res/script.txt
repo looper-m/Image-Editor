@@ -1,15 +1,49 @@
 load res/mojo.jpg
+blur
+save res/mojo-blur.png
+
+load res/mojo.jpg
+sharpen
+save res/mojo-sharpen.bmp
+
 dither
 save res/mojo-dither.png
-load res/mojo-dither.png
+
+load res/mojo-bmp.bmp
+mosaic seeds:1000
+save res/mojo-mosaic-1000.jpg
+
+mosaic seeds:5000
+save res/mojo-mosaic-5000.jpg
+
+mosaic seeds:10000
+save res/mojo-mosaic-10000.jpg
+
+load res/mojo-png.png
 sepia
-save res/mojo-sepia.bmp
-load res/mojo.jpg
-checkerboard width:100
-save res/new_square.bmp
-rainbow width:710  height:700  orientation:vertiCal
-save res/new-rainbow.jpg
+save res/mojo-sepia.jpg
+
+load res/mojo-bmp.bmp
+greyscale
+save res/mojo-greyscale.bmp
+
+checkerboard width:800
+save res/checkerboard-width-only.bmp
+
+checkerboard square_width:100
+save res/checkerboard-squarewidth-only.bmp
+
+rainbow width:700   orientation:vertiCal
+save res/rainbow-vertical.jpg
+
+rainbow height:700  orientation:Horizontal
+save res/rainbow-horizontal.png
+
 greece width:1000
-save res/new-greece.bmp
-mosaic seeds:4000
-save res/new-mosaic.jpg
+save res/greece.bmp
+
+france width:900
+save res/france.jpg
+
+switzerland width:502
+save res/swiss.png

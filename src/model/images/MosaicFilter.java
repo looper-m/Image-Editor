@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * This class extends {@code FilterImage} class to provide somewhat variable implementation of the
+ * {@code generateImage} function for mosaic-ing an input image based on argument seed value.
+ */
 public class MosaicFilter extends FilterImage {
   private HashMap<Pair<Integer, Integer>, ArrayList<Pair<Integer, Integer>>> clusters;
 
@@ -17,13 +21,17 @@ public class MosaicFilter extends FilterImage {
    * as an enum variable through the second parameter.
    *
    * @param image the input image, as BufferedImage type.
-   * @param type  the type of filter to use- BLUR/SHARPEN.
+   * @param type  the type of filter to use- MOSAIC(dummy).
    * @param seeds the seeds for the mosaic-ing operation.
    */
   public MosaicFilter(BufferedImage image, Filter type, int seeds) {
     super(image, type);
+    if(seeds <= 0) {
+      throw new IllegalArgumentException(String.format("Bad seed value: %d", seeds));
+    }
     Random r = new Random();
     clusters = new HashMap<>();
+
     for (int i = 0; i < seeds; i++) {
       while (true) {
         int randX = r.nextInt(imageWidth + 1);
@@ -56,10 +64,8 @@ public class MosaicFilter extends FilterImage {
     return closestSeed;
   }
 
-
   @Override
   public BufferedImage generateImage() {
-
     HashMap<Pair<Integer, Integer>, ArrayList<Integer>> seedAveragePixelMap = new HashMap<>();
     //Computing all the clusters
     for (int y = 0; y < imageHeight; y++) {
@@ -68,13 +74,13 @@ public class MosaicFilter extends FilterImage {
       }
     }
 
-
     for (Map.Entry<Pair<Integer, Integer>, ArrayList<Pair<Integer, Integer>>> entry :
             clusters.entrySet()) {
       ArrayList<Pair<Integer, Integer>> pixels = entry.getValue();
       List<Integer> redValues = new ArrayList<>();
       List<Integer> greenValues = new ArrayList<>();
       List<Integer> blueValues = new ArrayList<>();
+
       for (Pair<Integer, Integer> pixel : pixels) {
         redValues.add(pixelArray[pixel.getKey()][pixel.getValue()][0]);
         greenValues.add(pixelArray[pixel.getKey()][pixel.getValue()][1]);
@@ -98,8 +104,6 @@ public class MosaicFilter extends FilterImage {
         pixelArray[x][y][2] = rgb.get(2);
       }
     }
-
     return generateBufferedImage(pixelArray, imageHeight, imageWidth);
   }
-
 }
