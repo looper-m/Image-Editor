@@ -16,9 +16,6 @@ save res/mojo-mosaic-1000.jpg
 mosaic seeds:5000
 save res/mojo-mosaic-5000.jpg
 
-mosaic seeds:10000
-save res/mojo-mosaic-10000.jpg
-
 load res/mojo-png.png
 sepia
 save res/mojo-sepia.jpg

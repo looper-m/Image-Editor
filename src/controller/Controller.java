@@ -28,6 +28,13 @@ import controller.command.SwitzerlandFlagCommand;
  * the operation to be performed.
  */
 public class Controller {
+  /**
+   * This method can be invoked with an input {@code Readable} object containing commands to modify
+   * or create images.
+   *
+   * @param input input command script, as a readable type
+   * @throws IOException if there is an exception reading the file
+   */
   public void execute(Readable input) throws IOException {
     if (input == null) {
       throw new IllegalArgumentException("Bad input: null");

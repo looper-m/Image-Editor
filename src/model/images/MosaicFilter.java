@@ -26,7 +26,7 @@ public class MosaicFilter extends FilterImage {
    */
   public MosaicFilter(BufferedImage image, Filter type, int seeds) {
     super(image, type);
-    if(seeds <= 0) {
+    if (seeds <= 0) {
       throw new IllegalArgumentException(String.format("Bad seed value: %d", seeds));
     }
     Random r = new Random();
@@ -90,10 +90,10 @@ public class MosaicFilter extends FilterImage {
       int avg_green = (int) greenValues.stream().mapToInt(i -> i).average().orElse(0);
       int avg_blue = (int) blueValues.stream().mapToInt(i -> i).average().orElse(0);
       seedAveragePixelMap.put(entry.getKey(), new ArrayList<Integer>() {{
-        add(avg_red);
-        add(avg_green);
-        add(avg_blue);
-      }});
+          add(avg_red);
+          add(avg_green);
+          add(avg_blue);
+        }});
     }
 
     for (int y = 0; y < imageHeight; y++) {

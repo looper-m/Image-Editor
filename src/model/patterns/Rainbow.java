@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 import model.AbstractGeneratorModel;
 
 /**
- * This class implements the method defined in {@code GeneratorModel} to create a vertical or horizontal
- * rainbow image.
+ * This class implements the method defined in {@code GeneratorModel} to create a vertical or
+ * horizontal rainbow image.
  */
 public class Rainbow extends AbstractGeneratorModel {
   private final int imageWidth;

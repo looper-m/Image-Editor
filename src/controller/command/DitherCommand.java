@@ -10,7 +10,6 @@ import model.images.Filter;
  * This command class represents the controller for this specific class.
  */
 public class DitherCommand implements GeneratorCommand {
-  private final String parameters;
 
   /**
    * This constructor initializes the parameters.
@@ -18,7 +17,7 @@ public class DitherCommand implements GeneratorCommand {
    * @param parameters nothing as of now. Extendable in the future.
    */
   public DitherCommand(String parameters) {
-    this.parameters = parameters;
+    /* Parameters can be added and extendable in the future */
   }
 
   @Override

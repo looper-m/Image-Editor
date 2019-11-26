@@ -10,7 +10,6 @@ import model.images.TransformImage;
  * This command class represents the controller for this specific class.
  */
 public class SepiaCommand implements GeneratorCommand {
-  private final String parameters;
 
   /**
    * This constructor initializes the parameters.
@@ -18,7 +17,7 @@ public class SepiaCommand implements GeneratorCommand {
    * @param parameters nothing as of now. Extendable in the future.
    */
   public SepiaCommand(String parameters) {
-    this.parameters = parameters;
+    /* Parameters can be added and extendable in the future */
   }
 
   @Override

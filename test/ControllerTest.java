@@ -15,13 +15,16 @@ import controller.Controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+/**
+ * This class represents all the methods that tests the controller class of this project.
+ */
 public class ControllerTest {
   private Controller control;
 
   /**
    * Initialises a new instance of controller for testing.
    *
-   * @throws Exception
+   * @throws Exception thrown if object isn't created.
    */
   @Before
   public void setUp() throws Exception {
@@ -32,7 +35,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if user tries to apply
    * filter without loading the image.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void directCommand() throws IOException {
@@ -53,7 +56,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user tries to
    * execute without a script file.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void noFile() throws IOException {
@@ -70,7 +73,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user tries to
    * load an image without specifying the path.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void NoLoadArg() throws IOException {
@@ -91,7 +94,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user tries to
    * save generated image without giving the path.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void NoSaveArg() throws IOException {
@@ -112,7 +115,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user directly
    * tries to save without loading and generating the image.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void saveNull() throws IOException {
@@ -133,7 +136,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user tries to
    * save a file in an invalid format.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void badSaveFormat() throws IOException {
@@ -154,7 +157,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user tries to
    * execute a command that does not exist/ is invalid.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void nonExistingCommand() throws IOException {
@@ -173,9 +176,9 @@ public class ControllerTest {
 
   /**
    * This method tests if an IllegalArgument Exception is thrown as expected if the user passes an
-   * invalid parameter instead of colon when specifying the image arguments such as dimensions
+   * invalid parameter instead of colon when specifying the image arguments such as dimensions.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void badParameterFormat() throws IOException {
@@ -196,7 +199,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user passes
    * float point numbers as the image arguments instead of integer.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void floatParameter() throws IOException {
@@ -217,7 +220,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user tries to
    * pass an invalid parameter for an operation.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void badParameter() throws IOException {
@@ -238,7 +241,7 @@ public class ControllerTest {
    * This method tests if an IllegalArgument Exception is thrown as expected if the user passes a
    * invalid seed value for mosaic filtering.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void badMosaicSeed() throws IOException {
@@ -258,7 +261,7 @@ public class ControllerTest {
   /**
    * This method tests if the program behaves as expected when the commands are passed as a string.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void stringInput() throws IOException {
@@ -274,7 +277,7 @@ public class ControllerTest {
    * This method tests if the program behaves as expected when a script with valid arguments and
    * operations are passed.
    *
-   * @throws IOException
+   * @throws IOException when there is a problem reading or writing the file
    */
   @Test
   public void aBigValidTest() throws IOException {

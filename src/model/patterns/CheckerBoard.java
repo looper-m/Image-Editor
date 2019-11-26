@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage;
 import model.AbstractGeneratorModel;
 
 /**
- * This class implements the method defined in {@code GeneratorModel} to create a checkerboard pattern.
+ * This class implements the method defined in {@code GeneratorModel} to create a checkerboard
+ * pattern.
  */
 public class CheckerBoard extends AbstractGeneratorModel {
   private final int imageWidth;
