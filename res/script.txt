@@ -1,0 +1,15 @@
+load res/mojo.jpg
+dither
+save res/mojo-dither.png
+load res/mojo-dither.png
+sepia
+save res/mojo-sepia.bmp
+load res/mojo.jpg
+checkerboard width:100
+save res/new_square.bmp
+rainbow width:710  height:700  orientation:vertiCal
+save res/new-rainbow.jpg
+greece width:1000
+save res/new-greece.bmp
+mosaic seeds:4000
+save res/new-mosaic.jpg

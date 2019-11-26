@@ -3,12 +3,12 @@ package model.images;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import model.AbstractGenerator;
+import model.AbstractGeneratorModel;
 
 /**
- * This class implements the method defined in {@code Generator} to transform an input image.
+ * This class implements the method defined in {@code GeneratorModel} to transform an input image.
  */
-public class TransformImage extends AbstractGenerator {
+public class TransformImage extends AbstractGeneratorModel {
   private final int[][][] pixelArray;
   private final Transform type;
   private final int imageHeight;

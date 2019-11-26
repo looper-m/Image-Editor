@@ -2,12 +2,12 @@ package model.flags;
 
 import java.awt.image.BufferedImage;
 
-import model.AbstractGenerator;
+import model.AbstractGeneratorModel;
 
 /**
  * This class represents the flag generation method for Switzerland.
  */
-public class Switzerland extends AbstractGenerator {
+public class Switzerland extends AbstractGeneratorModel {
   private final int imageWidth;
   private final Flag type;
 

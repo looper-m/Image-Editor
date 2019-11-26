@@ -3,13 +3,13 @@ package model.images;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
-import model.AbstractGenerator;
+import model.AbstractGeneratorModel;
 
 /**
- * This class implements the method defined in {@code Generator} to apply filters on the input
+ * This class implements the method defined in {@code GeneratorModel} to apply filters on the input
  * image.
  */
-public class FilterImage extends AbstractGenerator {
+public class FilterImage extends AbstractGeneratorModel {
   final int[][][] pixelArray;
   final Filter type;
   final int imageHeight;

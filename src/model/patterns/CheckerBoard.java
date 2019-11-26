@@ -2,12 +2,12 @@ package model.patterns;
 
 import java.awt.image.BufferedImage;
 
-import model.AbstractGenerator;
+import model.AbstractGeneratorModel;
 
 /**
- * This class implements the method defined in {@code Generator} to create a checkerboard pattern.
+ * This class implements the method defined in {@code GeneratorModel} to create a checkerboard pattern.
  */
-public class CheckerBoard extends AbstractGenerator {
+public class CheckerBoard extends AbstractGeneratorModel {
   private final int imageWidth;
   private final Pattern type;
 

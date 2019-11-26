@@ -21,6 +21,9 @@ public enum Filter {
           {1.0000f, 1.0000f, 0.1875f},
           {1.0000f, 1.0000f, 0.3125f},
           {1.0000f, 0.4375f, 0.0625f}
+  }),
+  MOSAIC(new float[][]{
+          {1.0000f}
   });
   private float[][] kernel;
 

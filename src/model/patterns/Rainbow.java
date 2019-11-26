@@ -2,13 +2,13 @@ package model.patterns;
 
 import java.awt.image.BufferedImage;
 
-import model.AbstractGenerator;
+import model.AbstractGeneratorModel;
 
 /**
- * This class implements the method defined in {@code Generator} to create a vertical or horizontal
+ * This class implements the method defined in {@code GeneratorModel} to create a vertical or horizontal
  * rainbow image.
  */
-public class Rainbow extends AbstractGenerator {
+public class Rainbow extends AbstractGeneratorModel {
   private final int imageWidth;
   private final int imageHeight;
   private final Orientation orientation;

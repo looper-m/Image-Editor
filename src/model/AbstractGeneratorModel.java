@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  * This abstract class implements one common method for all its sub-classes.
  */
-public abstract class AbstractGenerator implements Generator {
+public abstract class AbstractGeneratorModel implements GeneratorModel {
 
   /**
    * Using the inputs passed, this method creates a {@code BufferedImage} variable to be sent back
