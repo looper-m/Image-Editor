@@ -5,15 +5,11 @@ This project performs a plethora of image and pattern processing operations. Pat
 ### Usage
 
 ```python
-Download the files and build it.
+new Controller().execute(_Readable_object_)
 
-Import any image that you want to filter or transform in /res
-If you want to generate checkerboard or flags or rainbows of custom size, use the corresponding Builder methods.
-
-Run Driver.java in src/controller
 ```
 
-#### Important guidelines:
+#### Important guidelines for Readable Object:
 
 load an image before the first operation. You can load a fresh image after an operation or choose to use the previously loaded image by simply not loading a new one before an operation.
 

@@ -27,7 +27,7 @@ import controller.command.SwitzerlandFlagCommand;
  * This class represents the main controller. It invokes calls to various model classes depending on
  * the operation to be performed.
  */
-public class Controller {
+public class BatchController {
   /**
    * This method can be invoked with an input {@code Readable} object containing commands to modify
    * or create images.
@@ -59,7 +59,7 @@ public class Controller {
     while (scanInput.hasNext()) {
       String data = scanInput.nextLine();
       String[] splitData = data.split("\\s+", 2);
-      if(splitData[0].equals("")){
+      if (splitData[0].equals("")) {
         continue;
       }
 
@@ -67,8 +67,8 @@ public class Controller {
       String argumentData = "";
       System.out.println(command + " " + argumentData);
 
-      if (command.equalsIgnoreCase("q") ||
-              command.equalsIgnoreCase("quit")) {
+      if (command.equalsIgnoreCase("q")
+              || command.equalsIgnoreCase("quit")) {
         return;
       } else if (command.equalsIgnoreCase("load")) {
         try {
@@ -118,7 +118,7 @@ public class Controller {
    */
   public static void main(String[] args) throws IOException {
     try {
-      new Controller().execute(new FileReader(args[0]));
+      new BatchController().execute(new FileReader(args[0]));
     } catch (IOException e) {
       throw new IllegalArgumentException("Bad input!");
     }

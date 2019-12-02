@@ -10,7 +10,7 @@ import java.io.StringReader;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
-import controller.Controller;
+import controller.BatchController;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -18,8 +18,8 @@ import static org.junit.Assert.fail;
 /**
  * This class represents all the methods that tests the controller class of this project.
  */
-public class ControllerTest {
-  private Controller control;
+public class BatchControllerTest {
+  private BatchController control;
 
   /**
    * Initialises a new instance of controller for testing.
@@ -28,7 +28,7 @@ public class ControllerTest {
    */
   @Before
   public void setUp() throws Exception {
-    control = new Controller();
+    control = new BatchController();
   }
 
   /**
