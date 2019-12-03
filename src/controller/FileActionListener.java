@@ -30,6 +30,7 @@ public class FileActionListener implements ActionListener {
         File f = fChooser.getSelectedFile();
 //        enclosingFrame.getLoadDisplayLabel().setText(f.getAbsolutePath());
         try {
+          control.history.push(control.view.getImageOnCanvas());
           BufferedImage image = ImageIO.read(new File(f.getAbsolutePath()));
           control.view.setImageOnCanvas(image);
         } catch (IOException ex) {

@@ -34,15 +34,33 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
   private JButton sharpenButton;
   private JButton sepiaButton;
   private JButton greyscaleButton;
+  private JButton mosaicButton;
+  private JButton ditherButton;
+
+  private JButton franceButton;
+  private JButton greeceButton;
+  private JButton swissButton;
+
+  private JButton rainbowButton;
+  private JButton checkerboardButton;
+
+  private JButton undoButton;
 
   public GeneratorViewGUI() throws IOException, ClassNotFoundException,
           UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
     super();
-
-    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());  // todo check if these two lines can be pushed out
+    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+      if ("Nimbus".equals(info.getName())) {
+        UIManager.setLookAndFeel(info.getClassName());
+        break;
+      }
+    }
+//    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");  // todo
+//     check if these two lines can be pushed out
     setDefaultLookAndFeelDecorated(false);
     setTitle("Image Processor");
     setSize(1000, 1000);
+    setLocation(400, 20);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //    setVisible(true);
 
@@ -62,6 +80,7 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
 
     // load image
     fileOpenButton = new JButton("Load");
+    fileOpenButton.setFont(new Font("Helvetica", Font.BOLD, 14));
     fileOpenButton.setActionCommand("load");
     loadSavePanel.add(Box.createRigidArea(new Dimension(8, 0)));
     loadSavePanel.add(fileOpenButton);
@@ -69,14 +88,15 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
 
     // Save image
     fileSaveButton = new JButton("Save");
+    fileSaveButton.setFont(new Font("Helvetica", Font.BOLD, 14));
     fileSaveButton.setActionCommand("save");
 //    fileSaveButton.addActionListener(new FileActionListener(this));
     loadSavePanel.add(fileSaveButton);
     loadSavePanel.add(Box.createRigidArea(new Dimension(8, 0)));
 
-    //show an image with a scrollbar
+    //image panel
     JPanel imagePanel = new JPanel();
-//    imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
+    imagePanel.setBorder(BorderFactory.createTitledBorder(" "));
     imagePanel.setLayout(new GridLayout(1, 0, 10, 10));
 //    imagePanel.setMaximumSize();
     mainPanel.add(imagePanel, BorderLayout.CENTER);
@@ -90,42 +110,126 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
 //    imageScrollPane.setPreferredSize(new Dimension(200, 900));
     imagePanel.add(imageScrollPane);
 
+    // Generator panel
+    JPanel generatorPanel = new JPanel();
+//    generatorPanel.setBorder(BorderFactory.createTitledBorder(""));
+    generatorPanel.setLayout(new BoxLayout(generatorPanel, BoxLayout.Y_AXIS));
+//    operationsPanel.setPreferredSize(new Dimension(10, 70));
+    mainPanel.add(generatorPanel, BorderLayout.WEST);
+
     // Operations panel
     JPanel operationsPanel = new JPanel();
-    operationsPanel.setBorder(BorderFactory.createEmptyBorder());
+    operationsPanel.setBorder(BorderFactory.createTitledBorder("operations"));
     operationsPanel.setLayout(new BoxLayout(operationsPanel, BoxLayout.PAGE_AXIS));
 //    operationsPanel.setPreferredSize(new Dimension(10, 70));
-    mainPanel.add(operationsPanel, BorderLayout.WEST);
+    generatorPanel.add(operationsPanel);
 
     // Blur image
     blurButton = new JButton("Blur");
     blurButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
     blurButton.setActionCommand("blur");
-    operationsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    blurButton.setMaximumSize(new Dimension(100, 30));
+    operationsPanel.add(Box.createRigidArea(new Dimension(4, 4)));
     operationsPanel.add(blurButton);
 
     // Sharpen image
     sharpenButton = new JButton("Sharpen");
     sharpenButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
     sharpenButton.setActionCommand("sharpen");
+    sharpenButton.setMaximumSize(new Dimension(100, 30));
     operationsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
     operationsPanel.add(sharpenButton);
+
+    // Dither image
+    ditherButton = new JButton("Dither");
+    ditherButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    ditherButton.setActionCommand("dither");
+    ditherButton.setMaximumSize(new Dimension(100, 30));
+    operationsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    operationsPanel.add(ditherButton);
+
+    // Mosaic
+    mosaicButton = new JButton("Mosaic");
+    mosaicButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    mosaicButton.setActionCommand("mosaic");
+    mosaicButton.setMaximumSize(new Dimension(100, 30));
+    operationsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    operationsPanel.add(mosaicButton);
 
     // Sepia
     sepiaButton = new JButton("Sepia");
     sepiaButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
     sepiaButton.setActionCommand("sepia");
-    operationsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    sepiaButton.setMaximumSize(new Dimension(100, 30));
+    operationsPanel.add(Box.createRigidArea(new Dimension(4, 10)));
     operationsPanel.add(sepiaButton);
 
     // Grayscale
     greyscaleButton = new JButton("Greyscale");
     greyscaleButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
     greyscaleButton.setActionCommand("greyscale");
+    greyscaleButton.setMaximumSize(new Dimension(100, 30));
     operationsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
     operationsPanel.add(greyscaleButton);
+    operationsPanel.add(Box.createRigidArea(new Dimension(4, 12)));
+
+    // Patterns panel
+    JPanel patternsPanel = new JPanel();
+    patternsPanel.setBorder(BorderFactory.createTitledBorder("patterns"));
+    patternsPanel.setLayout(new BoxLayout(patternsPanel, BoxLayout.PAGE_AXIS));
+//    patternsPanel.setPreferredSize(new Dimension(10, 70));
+    generatorPanel.add(patternsPanel);
+
+    // France
+    franceButton = new JButton("France");
+    franceButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    franceButton.setActionCommand("france");
+    franceButton.setMaximumSize(new Dimension(100, 30));
+    patternsPanel.add(Box.createRigidArea(new Dimension(4, 4)));
+    patternsPanel.add(franceButton);
+
+    // Greece
+    greeceButton = new JButton("Greece");
+    greeceButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    greeceButton.setActionCommand("greece");
+    greeceButton.setMaximumSize(new Dimension(100, 30));
+    patternsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    patternsPanel.add(greeceButton);
+
+    // Swiss
+    swissButton = new JButton("Swiss");
+    swissButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    swissButton.setActionCommand("switzerland");
+    swissButton.setMaximumSize(new Dimension(100, 30));
+    patternsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    patternsPanel.add(swissButton);
+
+    // Rainbow
+    rainbowButton = new JButton("Rainbow");
+    rainbowButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    rainbowButton.setActionCommand("rainbow");
+    rainbowButton.setMaximumSize(new Dimension(100, 30));
+    patternsPanel.add(Box.createRigidArea(new Dimension(4, 10)));
+    patternsPanel.add(rainbowButton);
+
+    // Checkerboard
+    checkerboardButton = new JButton("Checkers");
+    checkerboardButton.setFont(new Font("Helvetica", Font.PLAIN, 14));
+    checkerboardButton.setActionCommand("checkerboard");
+    checkerboardButton.setMaximumSize(new Dimension(100, 30));
+    patternsPanel.add(Box.createRigidArea(new Dimension(4, 0)));
+    patternsPanel.add(checkerboardButton);
+
+    // Undo
+    undoButton = new JButton("Undo");
+    undoButton.setFont(new Font("Helvetica", Font.ITALIC, 14));
+    undoButton.setActionCommand("undo");
+    undoButton.setMaximumSize(new Dimension(100, 30));
+    patternsPanel.add(Box.createRigidArea(new Dimension(4, 20)));
+    patternsPanel.add(undoButton);
 
     setVisible(true);
+//    pack();
   }
 
   @Override
@@ -145,6 +249,14 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     sharpenButton.addActionListener(listener);
     sepiaButton.addActionListener(listener);
     greyscaleButton.addActionListener(listener);
+    ditherButton.addActionListener(listener);
+    mosaicButton.addActionListener(listener);
+    franceButton.addActionListener(listener);
+    greeceButton.addActionListener(listener);
+    swissButton.addActionListener(listener);
+    rainbowButton.addActionListener(listener);
+    checkerboardButton.addActionListener(listener);
+    undoButton.addActionListener(listener);
   }
 
   @Override

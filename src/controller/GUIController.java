@@ -1,6 +1,8 @@
 package controller;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Stack;
 
 import javax.swing.*;
 
@@ -11,6 +13,7 @@ import view.GeneratorViewGUI;
 public class GUIController {
   GeneratorModel model;
   GeneratorView view;
+  Stack<BufferedImage> history = new Stack<>();
 
   public GUIController( GeneratorView view) {
 //    this.model = model;
