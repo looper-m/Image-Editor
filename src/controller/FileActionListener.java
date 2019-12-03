@@ -19,7 +19,7 @@ public class FileActionListener implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    String command = e.getActionCommand();
+    String command = e.getActionCommand().toLowerCase();
     if (command.equals("load")) {
       final JFileChooser fChooser = new JFileChooser(".");
       FileNameExtensionFilter filter = new FileNameExtensionFilter(

@@ -34,7 +34,7 @@ public class OperationsActionListener implements ActionListener {
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    String command = e.getActionCommand();
+    String command = e.getActionCommand().toLowerCase();
 
     if (command.equals("undo")) {
       if (control.history.empty()) {
@@ -46,7 +46,7 @@ public class OperationsActionListener implements ActionListener {
       }
     }
 
-    // todo redundant code
+    // todo redundant code and remove handling for backdrop
     Map<String, Function<String, GeneratorCommand>> knownCommands = new HashMap<>();
     knownCommands.put("blur", BlurCommand::new);
     knownCommands.put("sharpen", SharpenCommand::new);

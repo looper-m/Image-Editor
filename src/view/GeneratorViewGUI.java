@@ -8,18 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.Box;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.Icon;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 
 public class GeneratorViewGUI extends JFrame implements GeneratorView {
   private JPanel mainPanel;
@@ -27,6 +16,23 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
 
   private JLabel imageDisplayLabel;
   private JLabel saveImageLabel;
+
+  private JMenuItem loadItem;
+  private JMenuItem saveAsItem;
+  private JMenuItem undoItem;
+  private JMenuItem blurItem;
+  private JMenuItem sharpenItem;
+  private JMenuItem ditherItem;
+  private JMenuItem mosaicItem;
+  private JMenuItem sepiaItem;
+  private JMenuItem greyscaleItem;
+  private JMenuItem franceItem;
+  private JMenuItem greeceItem;
+  private JMenuItem swissItem;
+  private JMenuItem rainbowItem;
+  private JMenuItem checkerboardItem;
+  private JMenuItem infoItem;
+  private JMenuItem exitItem;
 
   private JButton fileOpenButton;
   private JButton fileSaveButton;
@@ -36,14 +42,11 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
   private JButton greyscaleButton;
   private JButton mosaicButton;
   private JButton ditherButton;
-
   private JButton franceButton;
   private JButton greeceButton;
   private JButton swissButton;
-
   private JButton rainbowButton;
   private JButton checkerboardButton;
-
   private JButton undoButton;
 
   public GeneratorViewGUI() throws IOException, ClassNotFoundException,
@@ -70,6 +73,92 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
 //    mainScrollPane = new JScrollPane(mainPanel);
 //    add(mainScrollPane);
     add(mainPanel);
+
+    JMenuBar menuBar = new JMenuBar();
+
+    Font menuFont = new Font("Helvetica", Font.PLAIN, 14);
+    JMenu fileMenu = new JMenu("File");
+    fileMenu.setFont(menuFont);
+    JMenu editMenu = new JMenu("Edit");
+    editMenu.setFont(menuFont);
+    JMenu subTransformMenu = new JMenu("Transform");
+    subTransformMenu.setFont(menuFont);
+    JMenu subFilterMenu = new JMenu("Filter");
+    subFilterMenu.setFont(menuFont);
+    JMenu subPatternMenu = new JMenu("Pattern");
+    subPatternMenu.setFont(menuFont);
+    JMenu effectMenu = new JMenu("Effect");
+    effectMenu.setFont(menuFont);
+    JMenu aboutMenu = new JMenu("About");
+    aboutMenu.setFont(menuFont);
+
+    loadItem = new JMenuItem("Load");
+    loadItem.setFont(menuFont);
+    saveAsItem = new JMenuItem("Save As");
+    saveAsItem.setActionCommand("save");
+    saveAsItem.setFont(menuFont);
+    undoItem = new JMenuItem("Undo");
+    undoItem.setFont(menuFont);
+    blurItem = new JMenuItem("Blur");
+    blurItem.setFont(menuFont);
+    sharpenItem = new JMenuItem("Sharpen");
+    sharpenItem.setFont(menuFont);
+    ditherItem = new JMenuItem("Dither");
+    ditherItem.setFont(menuFont);
+    mosaicItem = new JMenuItem("Mosaic");
+    mosaicItem.setFont(menuFont);
+    sepiaItem = new JMenuItem("Sepia");
+    sepiaItem.setFont(menuFont);
+    greyscaleItem = new JMenuItem("Greyscale");
+    greyscaleItem.setFont(menuFont);
+    franceItem = new JMenuItem("France");
+    franceItem.setFont(menuFont);
+    greeceItem = new JMenuItem("Greece");
+    greeceItem.setFont(menuFont);
+    swissItem = new JMenuItem("Switzerland");
+    swissItem.setFont(menuFont);
+    rainbowItem = new JMenuItem("Rainbow");
+    rainbowItem.setFont(menuFont);
+    checkerboardItem = new JMenuItem("Checkerboard");
+    checkerboardItem.setFont(menuFont);
+    infoItem = new JMenuItem("Info");  // todo action listener
+    infoItem.setFont(menuFont);
+    exitItem = new JMenuItem("Exit");  // todo action listener
+    exitItem.setFont(menuFont);
+
+    // setting menu hierarchy
+    subFilterMenu.add(blurItem);
+    subFilterMenu.add(sharpenItem);
+    subFilterMenu.add(ditherItem);
+    subFilterMenu.add(mosaicItem);
+    subTransformMenu.add(sepiaItem);
+    subTransformMenu.add(greyscaleItem);
+    subPatternMenu.add(franceItem);
+    subPatternMenu.add(greeceItem);
+    subPatternMenu.add(swissItem);
+    subPatternMenu.addSeparator();
+    subPatternMenu.add(rainbowItem);
+    subPatternMenu.add(checkerboardItem);
+    fileMenu.add(loadItem);
+    fileMenu.add(saveAsItem);
+    fileMenu.addSeparator();
+    fileMenu.add(exitItem);
+    editMenu.add(undoItem);
+    aboutMenu.add(infoItem);
+    effectMenu.add(subFilterMenu);
+    effectMenu.addSeparator();
+    effectMenu.add(subTransformMenu);
+    effectMenu.addSeparator();
+    effectMenu.add(subPatternMenu);
+
+    // Adding to Menu Bar
+    menuBar.add(fileMenu);
+    menuBar.add(editMenu);
+    menuBar.add(effectMenu);
+    menuBar.add(aboutMenu);
+
+    // Setting Menu Bar to frame
+    setJMenuBar(menuBar);
 
     // load and save panel
     JPanel loadSavePanel = new JPanel();
@@ -119,7 +208,7 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
 
     // Operations panel
     JPanel operationsPanel = new JPanel();
-    operationsPanel.setBorder(BorderFactory.createTitledBorder("operations"));
+    operationsPanel.setBorder(BorderFactory.createTitledBorder("filter/transform"));
     operationsPanel.setLayout(new BoxLayout(operationsPanel, BoxLayout.PAGE_AXIS));
 //    operationsPanel.setPreferredSize(new Dimension(10, 70));
     generatorPanel.add(operationsPanel);
@@ -241,6 +330,8 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
   public void addActionListenerForFile(ActionListener listener) {
     fileOpenButton.addActionListener(listener);
     fileSaveButton.addActionListener(listener);
+    loadItem.addActionListener(listener);
+    saveAsItem.addActionListener(listener);
   }
 
   @Override
@@ -257,6 +348,18 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     rainbowButton.addActionListener(listener);
     checkerboardButton.addActionListener(listener);
     undoButton.addActionListener(listener);
+    blurItem.addActionListener(listener);
+    sharpenItem.addActionListener(listener);
+    sepiaItem.addActionListener(listener);
+    greyscaleItem.addActionListener(listener);
+    ditherItem.addActionListener(listener);
+    mosaicItem.addActionListener(listener);
+    franceItem.addActionListener(listener);
+    greeceItem.addActionListener(listener);
+    swissItem.addActionListener(listener);
+    rainbowItem.addActionListener(listener);
+    checkerboardItem.addActionListener(listener);
+    undoItem.addActionListener(listener);
   }
 
   @Override
