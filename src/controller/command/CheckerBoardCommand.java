@@ -53,7 +53,7 @@ public class CheckerBoardCommand implements GeneratorCommand {
 
   @Override
   public BufferedImage executeCommand(BufferedImage input) {
-    if(squareWidth == -1) {
+    if (squareWidth == -1) {
       return CheckerBoard.getBuilder()
               .imageWidth(this.width)
               .build()

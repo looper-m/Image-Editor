@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Stack;
 
-import javax.swing.*;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import model.GeneratorModel;
 import view.GeneratorView;
@@ -13,19 +13,19 @@ import view.GeneratorViewGUI;
 public class GUIController {
   GeneratorModel model;
   GeneratorView view;
-  Stack<BufferedImage> history = new Stack<>();
+  Stack<BufferedImage> undoStack = new Stack<>();
+  Stack<BufferedImage> redoStack = new Stack<>();
 
-  public GUIController( GeneratorView view) {
-//    this.model = model;
+  GUIController(GeneratorView view) {
     this.view = view;
     this.view.addActionListenerForFile(new FileActionListener(this));
     this.view.addActionListenerForOperations(new OperationsActionListener(this));
+    this.view.addActionListenerForMiscellaneous(new MiscActionListener());
   }
 
   public static void main(String[] args) throws ClassNotFoundException,
-          UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException,
-          IOException {
+          UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
     GeneratorView view = new GeneratorViewGUI();
-    GUIController control = new GUIController(view);
+    new GUIController(view);
   }
 }

@@ -7,13 +7,14 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileActionListener implements ActionListener {
   private GUIController control;
 
-  public FileActionListener(GUIController control) {
+  FileActionListener(GUIController control) {
     this.control = control;
   }
 
@@ -28,22 +29,26 @@ public class FileActionListener implements ActionListener {
       int returnValue = fChooser.showOpenDialog(null);
       if (returnValue == JFileChooser.APPROVE_OPTION) {
         File f = fChooser.getSelectedFile();
-//        enclosingFrame.getLoadDisplayLabel().setText(f.getAbsolutePath());
         try {
-          control.history.push(control.view.getImageOnCanvas());
+          control.redoStack.removeAllElements();
+          control.undoStack.push(control.view.getImageOnCanvas());
           BufferedImage image = ImageIO.read(new File(f.getAbsolutePath()));
           control.view.setImageOnCanvas(image);
         } catch (IOException ex) {
           ex.printStackTrace();
         }
-//        new Toast("Opening  " + f.getName(), 700, 700).showToast(); // todo try for relative
-//         position
       }
     } else if (command.equals("save")) {
+      if (control.view.getImageOnCanvas() == null) {
+        JOptionPane.showMessageDialog(null, "No image on canvas!", "Error",
+                JOptionPane.ERROR_MESSAGE);
+        return;
+      }
       final JFileChooser fChooser = new JFileChooser(".");
       fChooser.setFileFilter(new FileNameExtensionFilter(".jpg", "jpg", "jpeg"));
       fChooser.addChoosableFileFilter(new FileNameExtensionFilter(".png", "png"));
       fChooser.addChoosableFileFilter(new FileNameExtensionFilter(".bmp", "bmp"));
+
       int returnValue = fChooser.showSaveDialog(null);
       if (returnValue == JFileChooser.APPROVE_OPTION) {
         File fileToSave = fChooser.getSelectedFile();
@@ -59,8 +64,8 @@ public class FileActionListener implements ActionListener {
         } catch (IOException ex) {
           ex.printStackTrace();
         }
-        new Toast(fileToSave.getName() + "  saved!", 700, 700).showToast(); // todo try for
-        // relative position
+        new Toast(fileToSave.getName() + "  saved!", 700, 700).showToast();
+        // todo try for relative position
       }
     }
   }

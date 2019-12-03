@@ -1,25 +1,39 @@
 package view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 public class GeneratorViewGUI extends JFrame implements GeneratorView {
   private JPanel mainPanel;
-  private JScrollPane mainScrollPane;
 
   private JLabel imageDisplayLabel;
-  private JLabel saveImageLabel;
 
   private JMenuItem loadItem;
   private JMenuItem saveAsItem;
   private JMenuItem undoItem;
+  private JMenuItem redoItem;
   private JMenuItem blurItem;
   private JMenuItem sharpenItem;
   private JMenuItem ditherItem;
@@ -48,9 +62,10 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
   private JButton rainbowButton;
   private JButton checkerboardButton;
   private JButton undoButton;
+  private JButton redoButton;
 
-  public GeneratorViewGUI() throws IOException, ClassNotFoundException,
-          UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+  public GeneratorViewGUI() throws ClassNotFoundException, UnsupportedLookAndFeelException,
+          InstantiationException, IllegalAccessException {
     super();
     for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
       if ("Nimbus".equals(info.getName())) {
@@ -58,20 +73,14 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
         break;
       }
     }
-//    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");  // todo
-//     check if these two lines can be pushed out
     setDefaultLookAndFeelDecorated(false);
-    setTitle("Image Processor");
+    setTitle("Fun with Images!");
     setSize(1000, 1000);
     setLocation(400, 20);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    setVisible(true);
 
     mainPanel = new JPanel();
-//    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
     mainPanel.setLayout(new BorderLayout());
-//    mainScrollPane = new JScrollPane(mainPanel);
-//    add(mainScrollPane);
     add(mainPanel);
 
     JMenuBar menuBar = new JMenuBar();
@@ -99,6 +108,8 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     saveAsItem.setFont(menuFont);
     undoItem = new JMenuItem("Undo");
     undoItem.setFont(menuFont);
+    redoItem = new JMenuItem("Redo");
+    redoItem.setFont(menuFont);
     blurItem = new JMenuItem("Blur");
     blurItem.setFont(menuFont);
     sharpenItem = new JMenuItem("Sharpen");
@@ -121,9 +132,9 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     rainbowItem.setFont(menuFont);
     checkerboardItem = new JMenuItem("Checkerboard");
     checkerboardItem.setFont(menuFont);
-    infoItem = new JMenuItem("Info");  // todo action listener
+    infoItem = new JMenuItem("Info");
     infoItem.setFont(menuFont);
-    exitItem = new JMenuItem("Exit");  // todo action listener
+    exitItem = new JMenuItem("Exit");
     exitItem.setFont(menuFont);
 
     // setting menu hierarchy
@@ -144,6 +155,7 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     fileMenu.addSeparator();
     fileMenu.add(exitItem);
     editMenu.add(undoItem);
+    editMenu.add(redoItem);
     aboutMenu.add(infoItem);
     effectMenu.add(subFilterMenu);
     effectMenu.addSeparator();
@@ -179,7 +191,6 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     fileSaveButton = new JButton("Save");
     fileSaveButton.setFont(new Font("Helvetica", Font.BOLD, 14));
     fileSaveButton.setActionCommand("save");
-//    fileSaveButton.addActionListener(new FileActionListener(this));
     loadSavePanel.add(fileSaveButton);
     loadSavePanel.add(Box.createRigidArea(new Dimension(8, 0)));
 
@@ -187,30 +198,23 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     JPanel imagePanel = new JPanel();
     imagePanel.setBorder(BorderFactory.createTitledBorder(" "));
     imagePanel.setLayout(new GridLayout(1, 0, 10, 10));
-//    imagePanel.setMaximumSize();
     mainPanel.add(imagePanel, BorderLayout.CENTER);
 
-    BufferedImage image = ImageIO.read(new File("res/backdrop.jpg"));
     imageDisplayLabel = new JLabel();
     imageDisplayLabel.setHorizontalAlignment(JLabel.CENTER);
     imageDisplayLabel.setVerticalAlignment(JLabel.CENTER);
-    imageDisplayLabel.setIcon(new ImageIcon(image));
     JScrollPane imageScrollPane = new JScrollPane(imageDisplayLabel);
-//    imageScrollPane.setPreferredSize(new Dimension(200, 900));
     imagePanel.add(imageScrollPane);
 
     // Generator panel
     JPanel generatorPanel = new JPanel();
-//    generatorPanel.setBorder(BorderFactory.createTitledBorder(""));
     generatorPanel.setLayout(new BoxLayout(generatorPanel, BoxLayout.Y_AXIS));
-//    operationsPanel.setPreferredSize(new Dimension(10, 70));
     mainPanel.add(generatorPanel, BorderLayout.WEST);
 
     // Operations panel
     JPanel operationsPanel = new JPanel();
     operationsPanel.setBorder(BorderFactory.createTitledBorder("filter/transform"));
     operationsPanel.setLayout(new BoxLayout(operationsPanel, BoxLayout.PAGE_AXIS));
-//    operationsPanel.setPreferredSize(new Dimension(10, 70));
     generatorPanel.add(operationsPanel);
 
     // Blur image
@@ -266,7 +270,6 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     JPanel patternsPanel = new JPanel();
     patternsPanel.setBorder(BorderFactory.createTitledBorder("patterns"));
     patternsPanel.setLayout(new BoxLayout(patternsPanel, BoxLayout.PAGE_AXIS));
-//    patternsPanel.setPreferredSize(new Dimension(10, 70));
     generatorPanel.add(patternsPanel);
 
     // France
@@ -313,17 +316,45 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     undoButton = new JButton("Undo");
     undoButton.setFont(new Font("Helvetica", Font.ITALIC, 14));
     undoButton.setActionCommand("undo");
-    undoButton.setMaximumSize(new Dimension(100, 30));
-    patternsPanel.add(Box.createRigidArea(new Dimension(4, 20)));
-    patternsPanel.add(undoButton);
+    undoButton.setMaximumSize(new Dimension(120, 30));
+    generatorPanel.add(Box.createRigidArea(new Dimension(4, 20)));
+    generatorPanel.add(undoButton);
+
+    // Redo
+    redoButton = new JButton("Redo");
+    redoButton.setFont(new Font("Helvetica", Font.ITALIC, 14));
+    redoButton.setActionCommand("redo");
+    redoButton.setMaximumSize(new Dimension(120, 30));
+    generatorPanel.add(Box.createRigidArea(new Dimension(4, 2)));
+    generatorPanel.add(redoButton);
 
     setVisible(true);
-//    pack();
+    //pack();
   }
 
   @Override
   public void setImageOnCanvas(BufferedImage image) {
+    if (image == null) {
+      imageDisplayLabel.setIcon(null);
+      return;
+    }
     imageDisplayLabel.setIcon(new ImageIcon(image));
+  }
+
+  @Override
+  public BufferedImage getImageOnCanvas() {
+    Icon icon = imageDisplayLabel.getIcon();
+    BufferedImage image;
+    try {
+      image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
+              BufferedImage.TYPE_INT_RGB);
+      Graphics graphics = image.createGraphics();
+      icon.paintIcon(null, graphics, 0, 0);
+      graphics.dispose();
+    } catch (NullPointerException e) {
+      return null;
+    }
+    return image;
   }
 
   @Override
@@ -348,6 +379,7 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     rainbowButton.addActionListener(listener);
     checkerboardButton.addActionListener(listener);
     undoButton.addActionListener(listener);
+    redoButton.addActionListener(listener);
     blurItem.addActionListener(listener);
     sharpenItem.addActionListener(listener);
     sepiaItem.addActionListener(listener);
@@ -360,16 +392,12 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     rainbowItem.addActionListener(listener);
     checkerboardItem.addActionListener(listener);
     undoItem.addActionListener(listener);
+    redoItem.addActionListener(listener);
   }
 
   @Override
-  public BufferedImage getImageOnCanvas() {
-    Icon icon = imageDisplayLabel.getIcon();
-    BufferedImage image = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(),
-            BufferedImage.TYPE_INT_RGB);
-    Graphics graphics = image.createGraphics();
-    icon.paintIcon(null, graphics, 0, 0);
-    graphics.dispose();
-    return image;
+  public void addActionListenerForMiscellaneous(ActionListener listener) {
+    infoItem.addActionListener(listener);
+    exitItem.addActionListener(listener);
   }
 }

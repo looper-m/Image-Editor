@@ -1,8 +1,6 @@
 package controller;
 
-import sun.awt.RequestFocusController;
-
-import java.awt.*;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -10,7 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 import controller.command.BlurCommand;
 import controller.command.CheckerBoardCommand;
@@ -28,7 +34,7 @@ public class OperationsActionListener implements ActionListener {
   private GUIController control;
   private String paramsData = "";
 
-  public OperationsActionListener(GUIController control) {
+  OperationsActionListener(GUIController control) {
     this.control = control;
   }
 
@@ -37,16 +43,26 @@ public class OperationsActionListener implements ActionListener {
     String command = e.getActionCommand().toLowerCase();
 
     if (command.equals("undo")) {
-      if (control.history.empty()) {
-        return;
-      } else {
-        System.out.println(control.history.size());
-        control.view.setImageOnCanvas(control.history.pop());
-        return;
+      if (!control.undoStack.empty()) {
+        control.redoStack.push(control.view.getImageOnCanvas());
+        control.view.setImageOnCanvas(control.undoStack.pop());
       }
+      return;
+    } else if (command.equals("redo")) {
+      if (!control.redoStack.empty()) {
+        control.undoStack.push(control.view.getImageOnCanvas());
+        control.view.setImageOnCanvas(control.redoStack.pop());
+      }
+      return;
     }
 
-    // todo redundant code and remove handling for backdrop
+    if (control.view.getImageOnCanvas() == null) {
+      JOptionPane.showMessageDialog(null, "No image on canvas!", "Error",
+              JOptionPane.ERROR_MESSAGE);
+      return;
+    }
+
+    // todo redundant code
     Map<String, Function<String, GeneratorCommand>> knownCommands = new HashMap<>();
     knownCommands.put("blur", BlurCommand::new);
     knownCommands.put("sharpen", SharpenCommand::new);
@@ -86,8 +102,9 @@ public class OperationsActionListener implements ActionListener {
             && !getCheckerParams()) {
       return;
     }
+    control.redoStack.removeAllElements();
     BufferedImage currentImage = control.view.getImageOnCanvas();
-    control.history.push(currentImage);
+    control.undoStack.push(currentImage);
 
     GeneratorCommand c = generatorCommand.apply(paramsData);
     control.view.setImageOnCanvas(c.executeCommand(currentImage));
@@ -209,7 +226,6 @@ public class OperationsActionListener implements ActionListener {
 
     JCheckBox sqBox = new JCheckBox("Smaller square width");
     sqBox.setActionCommand("sqWidth");
-    ButtonGroup orientationGroup = new ButtonGroup();
 
     JPanel inputPanel = new JPanel();
     inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.PAGE_AXIS));
