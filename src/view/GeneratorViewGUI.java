@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -25,9 +24,11 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+/**
+ * This view class represents a Java Swing Frame class as such. Its further extended to suit the
+ * image processing program and the options in it.
+ */
 public class GeneratorViewGUI extends JFrame implements GeneratorView {
-  private JPanel mainPanel;
-
   private JLabel imageDisplayLabel;
 
   private JMenuItem loadItem;
@@ -64,9 +65,21 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
   private JButton undoButton;
   private JButton redoButton;
 
+  /**
+   * This constructor calls the JFrame constructor to initialize the Frame in the window. It also
+   * sets other things up like title, style, size and all the Swing elements that make up the
+   * interactive GUI view.
+   *
+   * @throws ClassNotFoundException thrown when UIManager style type is not found
+   * @throws UnsupportedLookAndFeelException thrown when UIManager style type is not found
+   * @throws InstantiationException thrown when UIManager style type is not found
+   * @throws IllegalAccessException thrown when UIManager style type is not found
+   */
   public GeneratorViewGUI() throws ClassNotFoundException, UnsupportedLookAndFeelException,
           InstantiationException, IllegalAccessException {
     super();
+
+    // Set default frame specifics
     for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
       if ("Nimbus".equals(info.getName())) {
         UIManager.setLookAndFeel(info.getClassName());
@@ -79,10 +92,11 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     setLocation(400, 20);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    mainPanel = new JPanel();
+    JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
     add(mainPanel);
 
+    // Menu bar
     JMenuBar menuBar = new JMenuBar();
 
     Font menuFont = new Font("Helvetica", Font.PLAIN, 14);
@@ -194,7 +208,7 @@ public class GeneratorViewGUI extends JFrame implements GeneratorView {
     loadSavePanel.add(fileSaveButton);
     loadSavePanel.add(Box.createRigidArea(new Dimension(8, 0)));
 
-    //image panel
+    // image panel
     JPanel imagePanel = new JPanel();
     imagePanel.setBorder(BorderFactory.createTitledBorder(" "));
     imagePanel.setLayout(new GridLayout(1, 0, 10, 10));

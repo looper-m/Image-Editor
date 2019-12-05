@@ -108,19 +108,4 @@ public class BatchController {
       }
     }
   }
-
-  /**
-   * The main method that is auto invoked. It invokes the private method {@code execute()} to check
-   * and execute specific commands with given arguments.
-   *
-   * @param args args[0] with the name and path of input file
-   * @throws IOException if there is an error reading the input file.
-   */
-  public static void main(String[] args) throws IOException {
-    try {
-      new BatchController().execute(new FileReader(args[0]));
-    } catch (IOException e) {
-      throw new IllegalArgumentException("Bad input!");
-    }
-  }
 }

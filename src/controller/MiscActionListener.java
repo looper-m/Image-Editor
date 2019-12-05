@@ -5,7 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+/**
+ * This {@code ActionListener} class listens for events from all of the GUI view components other
+ * than file handling and image processing operations.
+ */
 public class MiscActionListener implements ActionListener {
+
   @Override
   public void actionPerformed(ActionEvent e) {
     String command = e.getActionCommand().toLowerCase();

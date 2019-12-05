@@ -4,8 +4,11 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import javax.swing.Box;
@@ -30,6 +33,10 @@ import controller.command.SepiaCommand;
 import controller.command.SharpenCommand;
 import controller.command.SwitzerlandFlagCommand;
 
+/**
+ * This {@code ActionListener} class listens for events from image processing components of the GUI
+ * view.
+ */
 public class OperationsActionListener implements ActionListener {
   private GUIController control;
   private String paramsData = "";
@@ -56,22 +63,23 @@ public class OperationsActionListener implements ActionListener {
       return;
     }
 
-    if (control.view.getImageOnCanvas() == null) {
+    Set<String> imageCommandNames = new HashSet<>(Arrays.asList("sharpen", "blur", "greyscale",
+            "sepia", "mosaic", "dither"));
+    if (control.view.getImageOnCanvas() == null && imageCommandNames.contains(command)) {
       JOptionPane.showMessageDialog(null, "No image on canvas!", "Error",
               JOptionPane.ERROR_MESSAGE);
       return;
     }
 
-    // todo redundant code
     Map<String, Function<String, GeneratorCommand>> knownCommands = new HashMap<>();
-    knownCommands.put("blur", BlurCommand::new);
     knownCommands.put("sharpen", SharpenCommand::new);
-    knownCommands.put("sepia", SepiaCommand::new);
+    knownCommands.put("blur", BlurCommand::new);
     knownCommands.put("greyscale", GreyscaleCommand::new);
-    knownCommands.put("mosaic", MosaicCommand::new);
-    knownCommands.put("dither", DitherCommand::new);
+    knownCommands.put("sepia", SepiaCommand::new);
     knownCommands.put("france", FranceFlagCommand::new);
     knownCommands.put("greece", GreeceFlagCommand::new);
+    knownCommands.put("mosaic", MosaicCommand::new);
+    knownCommands.put("dither", DitherCommand::new);
     knownCommands.put("switzerland", SwitzerlandFlagCommand::new);
     knownCommands.put("checkerboard", CheckerBoardCommand::new);
     knownCommands.put("rainbow", RainbowCommand::new);
@@ -92,8 +100,8 @@ public class OperationsActionListener implements ActionListener {
     } else if (command.equals("greece")
             && !getFlagParams(27)) {
       return;
-    } else if (command.equals("switzerland")  // todo find whats the proportion
-            && !getFlagParams(1)) {
+    } else if (command.equals("switzerland")
+            && !getFlagParams(32)) {
       return;
     } else if (command.equals("rainbow")
             && !getRainbowParams()) {

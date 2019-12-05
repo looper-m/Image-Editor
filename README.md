@@ -4,20 +4,25 @@ This project performs a plethora of image and pattern processing operations. Pat
 
 ### Usage
 
-```python
-new Controller().execute(_Readable_object_)
+```
+Run from the command line:
+1. java -jar Fun_with_Images.jar -interactive
+2. java -jar Fun_with_Images.jar -script <script_file>
 
+Run using the GUIController.java class providing appropriate arguments.
 ```
 
 #### Important guidelines for Readable Object:
 
-load an image before the first operation. You can load a fresh image after an operation or choose to use the previously loaded image by simply not loading a new one before an operation.
+- load an image before the first operation. You can load a fresh image after an operation or choose to use the previously loaded image by simply not loading a new one before an operation.
 
-every specification parameter must be separated by a `:` for example, `width:500` with no space between the _attribute_ and it's _value_
+- for script: every specification parameter must be separated by a `:` for example, `width:500` with no space between the _attribute_ and it's _value_
 
-empty lines and otherwise extra spaces are allowed
+- every Flag has a fixed (accepted) height and width dimensions. Follow the instructions in the GUI
 
-**.png**, **.bmp**, **.jpg** are the only formats allowed to _load_ or _save_
+- for script: empty lines and otherwise extra spaces are allowed
+
+- **.png**, **.bmp**, **.jpg** are the only formats allowed to _load_ or _save_
 
 
 ## Image processing operations:

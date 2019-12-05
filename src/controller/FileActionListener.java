@@ -11,6 +11,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * This {@code ActionListener} class listens for events from the file handling components of the GUI
+ * view.
+ */
 public class FileActionListener implements ActionListener {
   private GUIController control;
 
@@ -57,15 +61,13 @@ public class FileActionListener implements ActionListener {
         if (fileName.substring(fileName.length() - 4).equals(extension)) {
           fileName = fileName.substring(0, fileName.length() - 4);
         }
-        System.out.println(fileToSave + " " + extension);
+        // System.out.println(fileToSave + " " + extension);
         try {
           ImageIO.write(control.view.getImageOnCanvas(), extension.substring(1),
                   new File(fileName + extension));
         } catch (IOException ex) {
           ex.printStackTrace();
         }
-        new Toast(fileToSave.getName() + "  saved!", 700, 700).showToast();
-        // todo try for relative position
       }
     }
   }
